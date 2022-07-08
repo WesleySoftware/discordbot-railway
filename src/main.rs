@@ -22,7 +22,11 @@ impl EventHandler for Handler {
             // description of it.
             if let Err(why) = msg.channel_id.say(&ctx.http, "Pong! Via Railway! 🚅").await {
                 println!("Error sending message: {:?}", why);
+            } else if msg.content.contains("!sqrt"){
+            if let Err(why) = msg.channel_id.say(&ctx.http, "not implemented").await {
+                println!("Error sending message: {:?}", why);
             }
+        }
         }
     }
 
