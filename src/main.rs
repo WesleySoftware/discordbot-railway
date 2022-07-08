@@ -4,6 +4,7 @@ use serenity::async_trait;
 use serenity::model::channel::Message;
 use serenity::model::gateway::Ready;
 use serenity::prelude::*;
+mod test;
 
 struct Handler;
 
@@ -22,7 +23,12 @@ impl EventHandler for Handler {
             // description of it.
             if let Err(why) = msg.channel_id.say(&ctx.http, "Pong! Via Railway! 🚅").await {
                 println!("Error sending message: {:?}", why);
-            } else if msg.content.contains("!sqrt"){
+            } 
+        else if msg.content.contains("!sqrt"){
+            if let Err(why) = msg.channel_id.say(&ctx.http, "sqrt").await {
+                println!("Error sending message: {:?}", why);
+            }
+        } else {
             if let Err(why) = msg.channel_id.say(&ctx.http, "not implemented").await {
                 println!("Error sending message: {:?}", why);
             }
