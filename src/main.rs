@@ -15,23 +15,25 @@ impl EventHandler for Handler {
     // Event handlers are dispatched through a threadpool, and so multiple
     // events can be dispatched simultaneously.
     async fn message(&self, ctx: Context, msg: Message) {
-        if msg.content == "!ping" {
-            // Sending a message can fail, due to a network error, an
-            // authentication error, or lack of permissions to post in the
-            // channel, so log to stdout when some error happens, with a
-            // description of it.
-            if let Err(why) = msg.channel_id.say(&ctx.http, "Pong! Via Railway! 🚅").await {
-                println!("Error sending message: {:?}", why);
-            } 
-        } else if msg.content.contains("!sqrt"){
-            if let Err(why) = msg.channel_id.say(&ctx.http, "sqrt").await {
-                println!("Error sending message: {:?}", why);
-            }
-        } else if msg.content == "not implemented"{
-            return;
-        } else {
-            if let Err(why) = msg.channel_id.say(&ctx.http, "not implemented").await {
-                println!("Error sending message: {:?}", why);
+        if msg.content.chars().nth(0).unwrap() == '!'{
+            if msg.content == "!ping" {
+                // Sending a message can fail, due to a network error, an
+                // authentication error, or lack of permissions to post in the
+                // channel, so log to stdout when some error happens, with a
+                // description of it.
+                if let Err(why) = msg.channel_id.say(&ctx.http, "Pong! Via Railway! 🚅").await {
+                    println!("Error sending message: {:?}", why);
+                } 
+            } else if msg.content.contains("!sqrt") {
+                if let Err(why) = msg.channel_id.say(&ctx.http, "sqrt").await {
+                    println!("Error sending message: {:?}", why);
+                }
+            } else if msg.content == "not implemented" {
+                return;
+            } else {
+                if let Err(why) = msg.channel_id.say(&ctx.http, "not implemented").await {
+                    println!("Error sending message: {:?}", why);
+                }
             }
         }
     }
